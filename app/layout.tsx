@@ -1,13 +1,17 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "@/assets/styles/globals.css";
+import { APP_DESCRIPTION, APP_NAME, SERVER_URL } from "@/lib/constants";
 
 const inter = Inter({ subsets: ['latin'] });
 
 export const metadata: Metadata = {
-  title: "Tizzle Stores",
-  description:
-    "Shop a diverse range of products including cosmetics, food, electronic gadgets, fashion apparel, home goods, books, toys, sports equipment, pet supplies, automotive accessories, and much more. Discover quality items and great deals in one place.",
+  title: {
+    template: `%s | Tizzle`,
+    default: APP_NAME
+  },
+  description: APP_DESCRIPTION,
+  metadataBase: new URL(SERVER_URL)
 };
 
 export default function RootLayout({
