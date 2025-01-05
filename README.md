@@ -65,22 +65,6 @@ This project is designed to showcase a modern e-commerce platform with a variety
 2. Open your browser and navigate to http://localhost:3000 to view the website.
 
 ## Project Structure
-tizzle-store/
-├── public/
-│   ├── images/
-│   └── ...
-├── src/
-│   ├── components/
-│   ├── pages/
-│   ├── redux/
-│   ├── styles/
-│   ├── utils/
-│   └── ...
-├── .env.local
-├── next.config.js
-├── package.json
-└── README.md
-
 
 ## Contributing
 Contributions are welcome! If you have any suggestions, bug reports, or feature requests, please create an issue or submit a pull request.
