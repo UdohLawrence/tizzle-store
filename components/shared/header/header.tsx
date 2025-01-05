@@ -7,7 +7,7 @@ import ModeToggle from './mode-toggle';
 
 const Header = () => {
   return (
-    <header className="w-full shadow-lg">
+    <header className="w-full shadow-lg dark:border-b dark:border-b-slate-600">
       <div className="wrapper flex-between">
         <div className="flex-start">
           <Link href="/" className="flex-start">
