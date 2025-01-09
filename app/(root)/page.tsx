@@ -5,8 +5,8 @@ const Homepage = () => {
 
   return (
     <div className="space-y-8">
-      <h1 className="h2-bold">Latest Product</h1>
-      <ProductList title="Newest Arrivals" data={sampleData.products} limit={6} />
+      <h1 className="h2-bold">Latest Products</h1>
+      <ProductList title="Newest Arrivals" data={sampleData.products} />
     </div>
   );
 };
