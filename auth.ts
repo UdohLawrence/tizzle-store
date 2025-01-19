@@ -4,7 +4,7 @@ import NextAuth from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 
 import { prisma } from "./db/prisma";
-import { PrismaAdapter } from '@auth/prisma-adapter'
+import { PrismaAdapter } from "@auth/prisma-adapter";
 
 export const config = {
   pages: {
@@ -20,7 +20,7 @@ export const config = {
     CredentialsProvider({
       credentials: {
         email: { type: "email" },
-        password: { type: "password", },
+        password: { type: "password" },
       },
       async authorize(credentials) {
         if (credentials == null) return null;
@@ -31,14 +31,17 @@ export const config = {
         });
 
         if (user && user.password) {
-          const isMatch = compareSync(credentials.password as string, user.password);
+          const isMatch = compareSync(
+            credentials.password as string,
+            user.password
+          );
 
           if (isMatch) {
             return {
               id: user.id,
               name: user.name,
               email: user.email,
-              role: user.role
+              role: user.role,
             };
           }
         }
@@ -47,14 +50,36 @@ export const config = {
     }),
   ],
   callbacks: {
-    async session({ session, user, trigger, token }: any) {
-      session.user.id = token.sub
-      if (trigger === 'update') {
-        session.user.name = user.name;
+    async session({ session, trigger, token }: any) {
+      session.user.id = token.id;
+      session.user.role = token.role;
+      session.user.name = token.name;
+
+      if (trigger === "update" && token.name) {
+        session.user.name = token.name;
+      }
+      return session;
+    },
+    async jwt({ token, user, trigger, session }: any) {
+      if (user) {
+        token.role = user.role;
+        //update user name if it is NO_NAME
+        if (user.name === "NO_NAME") {
+          token.name = user.email!.split("@")[0];
+          //update user name in db
+          await prisma.user.update({
+            where: { id: user.id },
+            data: { name: token.name },
+          });
+        }
+      }
+      // Handle session updates e.g name change
+      if (session?.user.name && trigger === "update") {
+        token.name = session.user.name;
+      }
+      return token;
     }
-     return session;
   },
-},
 } satisfies NextAuthConfig;
 
 export const { handlers, auth, signIn, signOut } = NextAuth(config);
