@@ -15,3 +15,19 @@ export const insertProductSchema = z.object({
   banner: z.string().nullable(),
   price: currency
 })
+
+export const signInFormSchema = z.object({
+  email: z.string().email("Invalid email address").min(3, 'Email must be at least 3 characters'),
+  password: z.string().min(8, 'Password must be at least 8 characters')
+})
+
+export const signUpFormSchema = z.object({
+  name: z.string().min(5, 'Name must be at least 5 characters'),
+  email: z.string().min(8, 'Email must be at least 8 characters'),
+  password: z.string().min(8, 'Password must be at least 8 characters'),
+  confirmPassword: z.string()
+})
+  .refine((data) => data.password === data.confirmPassword, {
+    message: "Passwords must match",
+    path: ['confirmPassword']
+  });
