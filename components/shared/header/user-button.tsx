@@ -15,7 +15,7 @@ const UserButton = async () => {
           <Button>Sign In</Button>
         </Link>
         <Link href='/sign-up'>
-          <Button variant='ghost'>Sign Up</Button>
+          <Button variant='outline'>Sign Up</Button>
         </Link>
       </>
     )
