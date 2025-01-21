@@ -10,9 +10,14 @@ const UserButton = async () => {
 
   if (!session) {
     return (
-      <Link href='/sign-in'>
-        <Button>Sign In</Button>
-      </Link>
+      <>
+        <Link href='/sign-in'>
+          <Button>Sign In</Button>
+        </Link>
+        <Link href='/sign-up'>
+          <Button variant='ghost'>Sign Up</Button>
+        </Link>
+      </>
     )
   }
   const firstInitial = session.user?.name?.charAt(0).toUpperCase() ?? '';
